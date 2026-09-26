@@ -61,34 +61,13 @@ def decade_label(year:int) -> str:
 возвращает метку "новые" (после 2020), "недавние" (2015–2020) или 
 "старые" (раньше 2015)."""
     match year:
-        case 2026:
+        case _ if year > 2020:
             return "новые"
-        case 2025:
-            return "новые"
-        case 2024:
-            return "новые"
-        case 2023:
-            return "новые"
-        case 2022:
-            return "новые"
-        case 2021:
-            return "новые"
-        case 2020:
-            return "недавние"
-        case 2020:
-            return "недавние"
-        case 2019:
-            return "недавние"
-        case 2018:
-            return "недавние"
-        case 2017:
-            return "недавние"
-        case 2016:
-            return "недавние"
-        case 2015:
-            return "недавние"
-        case _:
+        case _ if year < 2015:
             return "старые"
+        case _:
+            return "недавние"
+        
 
 
 movies = [
@@ -119,4 +98,4 @@ movies = [
 #print(catalog_age_stats(movies))
 #print(duration_in_hours(98))
 print(rating_tier(4))
-print(decade_label(2014))
+print(decade_label(2016))

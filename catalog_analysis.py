@@ -11,7 +11,7 @@ def average_rating(movies):
         sum_rating = word.get("rating") + sum_rating   
     return round(sum_rating / count, 1)
 
-def catalog_age_stats(movies, current_year=2026):
+def catalog_age_stats(movies:list, current_year=2026) ->tuple:
     """Функция catalog_age_stats(movies, current_year=2026) возвращает
       кортеж (самый старый фильм в годах, самый новый фильм в годах, среднее),
       где среднее округлено вверх до целого с помощью math.ceil."""
@@ -38,7 +38,7 @@ def catalog_age_stats(movies, current_year=2026):
     tuple = (name_old_film, name_new_film, sr_year)
     return tuple
 
-def duration_in_hours(minutes):
+def duration_in_hours(minutes:int) -> str: 
     """Функция duration_in_hours(minutes) переводит минуты в формат "2ч 35м", 
     используя целочисленное деление и остаток от деления."""
     hours = minutes // 60
@@ -46,6 +46,50 @@ def duration_in_hours(minutes):
     string_min = str(hours) + 'ч ' + str(min_at_houres) + 'м'
 
     return string_min
+
+def rating_tier(rating:float) ->str:
+
+    """Напишите функцию rating_tier(rating), которая по оценке возвращает категорию: 
+\"шедевр\" (≥9), \"хорошо\" (7–8.9), \"средне\" (5–6.9), \"слабо\" (<5). 
+Реализуйте ее через if/elif, а внутри используйте тернарный оператор хотя 
+бы один раз."""
+    return "шедевр" if rating >= 9 else ("слабо" if rating < 5 else 
+                                        ("средне" if rating < 7 else "хорошо"))
+
+def decade_label(year:int) -> str:
+    """Напишите функцию decade_label(year), которая через оператор match 
+возвращает метку "новые" (после 2020), "недавние" (2015–2020) или 
+"старые" (раньше 2015)."""
+    match year:
+        case 2026:
+            return "новые"
+        case 2025:
+            return "новые"
+        case 2024:
+            return "новые"
+        case 2023:
+            return "новые"
+        case 2022:
+            return "новые"
+        case 2021:
+            return "новые"
+        case 2020:
+            return "недавние"
+        case 2020:
+            return "недавние"
+        case 2019:
+            return "недавние"
+        case 2018:
+            return "недавние"
+        case 2017:
+            return "недавние"
+        case 2016:
+            return "недавние"
+        case 2015:
+            return "недавние"
+        case _:
+            return "старые"
+
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -71,6 +115,8 @@ movies = [
      "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
 ] 
 
-print(average_rating(movies))
-print(catalog_age_stats(movies, 2026))
-print(duration_in_hours(98))
+#print(average_rating(movies))
+#print(catalog_age_stats(movies))
+#print(duration_in_hours(98))
+print(rating_tier(4))
+print(decade_label(2014))

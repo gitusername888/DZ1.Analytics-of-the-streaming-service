@@ -67,8 +67,45 @@ def decade_label(year:int) -> str:
             return "старые"
         case _:
             return "недавние"
-        
 
+def necomedy (movies):
+    """С помощью for и continue выведите на экран (print) названия всех фильмов, 
+которые НЕ относятся к жанру "comedy". stage 3"""
+    result = []
+    for word in movies:
+        g = word.get("genres")
+        if "comedy" in g:
+            continue
+        else:
+            result.append(word.get("title"))
+    return result
+
+def rating_9 (movies):
+    """С помощью while и break найдите первый по порядку в 
+    списке фильм с рейтингом выше 9.0; если такого фильма нет, цикл 
+    должен завершиться веткой else с сообщением "Шедевров не найдено"."""
+    count = 0
+    rating = 9
+    while count < len(movies):
+        element = movies[count]
+        if element.get("rating") > rating:
+            return element.get("title")
+            break
+        count += 1
+    else:
+        return "Шедевров не найдено"
+
+def count_long_movies(movies, threshold=120):
+    """Напишите функцию count_long_movies(movies, threshold=120), которая через 
+    for с накопительной переменной считает количество фильмов длиннее 
+    threshold минут."""
+    result = 0
+    for element in movies:
+        g = element.get("duration_min")
+        if g > threshold:
+            result += 1
+        
+    return result
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -94,8 +131,37 @@ movies = [
      "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
 ] 
 
-#print(average_rating(movies))
-#print(catalog_age_stats(movies))
-#print(duration_in_hours(98))
-print(rating_tier(4))
-print(decade_label(2016))
+movies_9 = [
+    {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
+     "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", 
+                                                    "O. Isaac"]},
+    {"title": "Kitchen Stories", "year": 2019, "genres": {"comedy", "drama"},
+     "rating": 7.1, "duration_min": 98, "actors": ["A. Novak", "M. Ferguson"]},
+    {"title": "silent hours", "year": 2016, "genres": {"thriller", "drama"},
+     "rating": 6.4, "duration_min": 112, "actors": ["J. Bloom", "K. Lee"]},
+    {"title": "Comet Racers", "year": 2023, "genres": {"sci-fi", "action"},
+     "rating": 5.9, "duration_min": 101, "actors": ["O. Isaac", "P. Diaz"]},
+    {"title": "The Last Bakery", "year": 2014, "genres": {"comedy"},
+     "rating": 7.8, "duration_min": 89, "actors": ["A. Novak", "T. Chalamet"]},
+    {"title": "midnight in oslo", "year": 2020, "genres": {"thriller", "mystery"},
+     "rating": 8.9, "duration_min": 124, "actors": ["K. Lee", "R. Ferguson"]},
+    {"title": "Garden of Static", "year": 2022, "genres": {"drama"},
+     "rating": 4.8, "duration_min": 137, "actors": ["P. Diaz", "J. Bloom"]},
+    {"title": "Two Left Shoes", "year": 2011, "genres": {"comedy"},
+     "rating": 6.0, "duration_min": 95, "actors": ["A. Novak", "K. Lee"]},
+    {"title": "Red Harbor", "year": 2018, "genres": {"action", "thriller"},
+     "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
+] 
+
+
+
+
+#print(average_rating(movies)) # stage 1
+#print(catalog_age_stats(movies)) # stage 1
+#print(duration_in_hours(98)) # stage 1
+#print(rating_tier(4)) # stage 2
+#print(decade_label(2016)) # stage 2
+print(necomedy(movies)) # stage 3
+print(rating_9(movies)) # stage 3
+print(rating_9(movies_9)) # stage 3
+print(count_long_movies(movies, 120)) # stage 3

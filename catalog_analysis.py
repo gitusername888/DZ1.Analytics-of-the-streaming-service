@@ -107,6 +107,49 @@ def count_long_movies(movies, threshold=120):
         
     return result
 
+def normalize_title(title):
+
+    """Напишите функцию normalize_title(title), которая приводит строку 
+    к формату Title Case (каждое слово с заглавной буквы) без использования 
+    str.title() напрямую: разбейте строку по пробелам и соберите заново 
+    вручную, меняя первую букву каждого слова через срез 
+    (word[0].upper() + word[1:])."""
+    list_title = title.split(" ")
+    sting_title = ""
+    count = 0
+    for word in list_title:
+        norm_title = word[0].upper() + word[1:]
+        count += 1
+        if count < len(list_title):
+            sting_title = sting_title + norm_title + ' '
+        else:
+            sting_title = sting_title + norm_title
+    return sting_title
+
+def make_slug(title):
+
+    """Напишите функцию make_slug(title), которая превращает нормализованное
+      название в «слаг» вида the-quiet-algorithm."""
+
+    down_title = title.lower()
+    slug_text = down_title.replace(' ', '-')
+
+    return slug_text
+
+def format_report_line(movie:set) -> str:
+
+    """Напишите функцию format_report_line(movie), возвращающую единую 
+    строку с описанием фильма.
+    '"The Quiet Algorithm" (2024) — 9.2/10, 1ч 58м, жанры: drama, sci-fi'"""
+
+    result = f'"{movie.get("title")}" ({movie.get("year")})' 
+    result = result + f' — {movie.get("rating")}/10, '
+    result = result + f'{duration_in_hours(movie.get("duration_min"))}, '
+    gan = sorted(movie.get("genres"))
+    result = result + f'жанры: {', '.join(gan)}'
+    return result
+
+
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", 
@@ -161,7 +204,12 @@ movies_9 = [
 #print(duration_in_hours(98)) # stage 1
 #print(rating_tier(4)) # stage 2
 #print(decade_label(2016)) # stage 2
-print(necomedy(movies)) # stage 3
-print(rating_9(movies)) # stage 3
-print(rating_9(movies_9)) # stage 3
-print(count_long_movies(movies, 120)) # stage 3
+#print(necomedy(movies)) # stage 3
+#print(rating_9(movies)) # stage 3
+#print(rating_9(movies_9)) # stage 3
+#print(count_long_movies(movies, 120)) # stage 3
+print(normalize_title("midnight in oslo")) # stage 4
+print(make_slug("Midnight In Oslo")) # stage 4
+print(format_report_line({"title": "The Dune Chronicles", "year": 2021, 
+    "genres": {"sci-fi", "drama"}, "rating": 8.6, "duration_min": 155,
+    "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]})) # stage 4

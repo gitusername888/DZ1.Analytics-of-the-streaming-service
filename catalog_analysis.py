@@ -149,6 +149,29 @@ def format_report_line(movie:set) -> str:
     result = result + f'жанры: {', '.join(gan)}'
     return result
 
+def titles_sorted_by_rating(movies: list) -> list:
+
+    """Напишите функцию titles_sorted_by_rating(movies), возвращающую список 
+    названий фильмов, отсортированных по убыванию рейтинга."""
+    result = []
+    sorted_list = sorted(movies, key= lambda x: x['rating'], reverse= True)
+    for element in sorted_list:
+        g = element.get("title")
+        result.append(g) 
+        
+    return result
+
+def top_n_by_rating(movies:list, n=3) -> list:
+    """Напишите функцию top_n_by_rating(movies, n=3), возвращающую список 
+    из n кортежей (title, rating) — топ по рейтингу."""
+    result = []
+    sorted_list = sorted(movies, key= lambda x: x['rating'], reverse= True)
+    count  = 0
+    for count in range (n):
+        tuple = (sorted_list[count].get("title"), sorted_list[count].get("rating"))
+        result.append(tuple) 
+        
+    return result
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -208,8 +231,10 @@ movies_9 = [
 #print(rating_9(movies)) # stage 3
 #print(rating_9(movies_9)) # stage 3
 #print(count_long_movies(movies, 120)) # stage 3
-print(normalize_title("midnight in oslo")) # stage 4
-print(make_slug("Midnight In Oslo")) # stage 4
-print(format_report_line({"title": "The Dune Chronicles", "year": 2021, 
-    "genres": {"sci-fi", "drama"}, "rating": 8.6, "duration_min": 155,
-    "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]})) # stage 4
+#print(normalize_title("midnight in oslo")) # stage 4
+#print(make_slug("Midnight In Oslo")) # stage 4
+#print(format_report_line({"title": "The Dune Chronicles", "year": 2021, 
+#    "genres": {"sci-fi", "drama"}, "rating": 8.6, "duration_min": 155,
+#    "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]})) # stage 4
+print(titles_sorted_by_rating(movies)) # stage 5
+print(top_n_by_rating(movies, 5)) # stage 5

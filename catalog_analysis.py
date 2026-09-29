@@ -173,6 +173,45 @@ def top_n_by_rating(movies:list, n=3) -> list:
         
     return result
 
+def count_by_genre(movies):
+    """Напишите функцию count_by_genre(movies), возвращающую словарь {жанр: 
+    количество фильмов}, построенный вручную через цикл и метод dict.get() 
+    (без Counter)."""
+
+
+    genre_counts = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            genre_counts[genre] = genre_counts.get(genre, 0) + 1
+    return genre_counts
+        
+
+
+def actor_filmography(movies):
+    """Напишите функцию actor_filmography(movies), возвращающую словарь
+      {актер: [список названий фильмов]}."""
+    genre_counts = {}
+    for movie in movies:
+            for actor in movie["actors"]:
+                films = genre_counts.get(actor)
+                if films is None:
+                    films = []
+                    genre_counts[actor] = films
+
+                films.append(movie["title"])
+    return genre_counts
+
+def high_rated_movies(movies):
+    """С помощью генератора словаря (dict comprehension) постройте словарь 
+    {title: rating} только для фильмов с рейтингом выше среднего (используйте
+      average_rating из этапа 1)."""
+    return { 
+    movie["title"]: movie["rating"]
+    for movie in movies
+    if movie["rating"] > average_rating(movies)}
+    
+
+
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", 
@@ -236,5 +275,9 @@ movies_9 = [
 #print(format_report_line({"title": "The Dune Chronicles", "year": 2021, 
 #    "genres": {"sci-fi", "drama"}, "rating": 8.6, "duration_min": 155,
 #    "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]})) # stage 4
-print(titles_sorted_by_rating(movies)) # stage 5
-print(top_n_by_rating(movies, 5)) # stage 5
+#print(titles_sorted_by_rating(movies)) # stage 5
+#print(top_n_by_rating(movies, 5)) # stage 5
+print(count_by_genre(movies)) # stage 6
+print(actor_filmography(movies)) # stage 6
+print(high_rated_movies(movies)) # stage 6
+print(average_rating(movies))# stage 6

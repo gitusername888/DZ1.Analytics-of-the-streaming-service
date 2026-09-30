@@ -209,12 +209,57 @@ def high_rated_movies(movies):
     movie["title"]: movie["rating"]
     for movie in movies
     if movie["rating"] > average_rating(movies)}
+
+def all_genres(movies):
+    """Напишите функцию all_genres(movies), возвращающую множество 
+    всех уникальных жанров каталога."""
+    genres_set = set()
+    for movie in movies:
+        # Добавляем все жанры из списка фильма в множество
+        genres_set.update(movie.get("genres", []))
+    return genres_set
+
+def common_actors(movie1, movie2):
+    """Напишите функцию common_actors(movie1, movie2), возвращающую множество 
+    актеров, снимавшихся в обоих фильмах."""
+
+    set1 = set(movie1.get("actors", []))
+    set2 = set(movie2.get("actors", []))
     
+    set3 = set(set2 & set1)
+    
+    return set3
+
+def genres_only_in_one(movies_a, movies_b):
+    """Напишите функцию genres_only_in_one(movies_a, movies_b), которая 
+    возвращает жанры, встречающиеся в movies_a, но не встречающиеся 
+    в movies_b."""
+
+    """genres_a = set()
+    genres_b = set()
+
+     movie in movies_a:
+        genres_a.update(movie.get("genres", []))
+
+    for movie in movies_b:
+        genres_b.update(movie.get("genres", []))"""
+  
+    # Разность множеств: жанры из A, которых нет в B
+    return all_genres(movies_a) - all_genres(movies_b)
+
+    
+movie1 = {"title": "The Dune Chronicles", "year": 2021, "genres": 
+          {"sci-fi", "drama"}, "rating": 8.6,
+            "duration_min": 155, "actors":
+       ["T. Chalamet", "R. Ferguson",        "O. Isaac"]}
+movie2 = {"title": "Kitchen Stories", "year": 2019, "genres":
+           {"comedy", "drama"},
+     "rating": 7.1, "duration_min": 98, "actors": ["A. Novak", "R. Ferguson"]}
 
 
 movies = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
-     "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", 
+     "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson",
                                                     "O. Isaac"]},
     {"title": "Kitchen Stories", "year": 2019, "genres": {"comedy", "drama"},
      "rating": 7.1, "duration_min": 98, "actors": ["A. Novak", "M. Ferguson"]},
@@ -240,20 +285,16 @@ movies_9 = [
     {"title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
      "rating": 8.6, "duration_min": 155, "actors": ["T. Chalamet", "R. Ferguson", 
                                                     "O. Isaac"]},
-    {"title": "Kitchen Stories", "year": 2019, "genres": {"comedy", "drama"},
-     "rating": 7.1, "duration_min": 98, "actors": ["A. Novak", "M. Ferguson"]},
     {"title": "silent hours", "year": 2016, "genres": {"thriller", "drama"},
      "rating": 6.4, "duration_min": 112, "actors": ["J. Bloom", "K. Lee"]},
     {"title": "Comet Racers", "year": 2023, "genres": {"sci-fi", "action"},
      "rating": 5.9, "duration_min": 101, "actors": ["O. Isaac", "P. Diaz"]},
-    {"title": "The Last Bakery", "year": 2014, "genres": {"comedy"},
-     "rating": 7.8, "duration_min": 89, "actors": ["A. Novak", "T. Chalamet"]},
+    
     {"title": "midnight in oslo", "year": 2020, "genres": {"thriller", "mystery"},
      "rating": 8.9, "duration_min": 124, "actors": ["K. Lee", "R. Ferguson"]},
     {"title": "Garden of Static", "year": 2022, "genres": {"drama"},
      "rating": 4.8, "duration_min": 137, "actors": ["P. Diaz", "J. Bloom"]},
-    {"title": "Two Left Shoes", "year": 2011, "genres": {"comedy"},
-     "rating": 6.0, "duration_min": 95, "actors": ["A. Novak", "K. Lee"]},
+    
     {"title": "Red Harbor", "year": 2018, "genres": {"action", "thriller"},
      "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
 ] 
@@ -277,7 +318,11 @@ movies_9 = [
 #    "actors": ["T. Chalamet", "R. Ferguson", "O. Isaac"]})) # stage 4
 #print(titles_sorted_by_rating(movies)) # stage 5
 #print(top_n_by_rating(movies, 5)) # stage 5
-print(count_by_genre(movies)) # stage 6
-print(actor_filmography(movies)) # stage 6
-print(high_rated_movies(movies)) # stage 6
-print(average_rating(movies))# stage 6
+#rint(count_by_genre(movies)) # stage 6
+#rint(actor_filmography(movies)) # stage 6
+#rint(high_rated_movies(movies)) # stage 6
+#rint(average_rating(movies))# stage 6
+print(all_genres(movies))# stage 7
+print(common_actors(movie1, movie2))# stage 7
+print(genres_only_in_one(movies, movies_9))# stage 7
+

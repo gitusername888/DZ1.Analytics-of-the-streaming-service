@@ -247,14 +247,15 @@ def genres_only_in_one(movies_a, movies_b):
     # Разность множеств: жанры из A, которых нет в B
     return all_genres(movies_a) - all_genres(movies_b)
 
-    
-movie1 = {"title": "The Dune Chronicles", "year": 2021, "genres": 
-          {"sci-fi", "drama"}, "rating": 8.6,
-            "duration_min": 155, "actors":
-       ["T. Chalamet", "R. Ferguson",        "O. Isaac"]}
-movie2 = {"title": "Kitchen Stories", "year": 2019, "genres":
-           {"comedy", "drama"},
-     "rating": 7.1, "duration_min": 98, "actors": ["A. Novak", "R. Ferguson"]}
+def iter_high_rated(movies, min_rating=8.0):
+    """Напишите функцию-генератор iter_high_rated(movies, min_rating=8.0),
+      которая через yield лениво отдает фильмы с 
+      рейтингом не ниже min_rating."""
+
+    for movie in movies:
+        if movie.get("rating", 0) >= min_rating:
+            yield movie
+
 
 
 movies = [
@@ -322,7 +323,19 @@ movies_9 = [
 #rint(actor_filmography(movies)) # stage 6
 #rint(high_rated_movies(movies)) # stage 6
 #rint(average_rating(movies))# stage 6
-print(all_genres(movies))# stage 7
-print(common_actors(movie1, movie2))# stage 7
-print(genres_only_in_one(movies, movies_9))# stage 7
+#print(all_genres(movies))# stage 7
+#print(common_actors(movies[0], movies[3])) # stage 7
+#print(genres_only_in_one(movies[5:6], movies[:5])) # stage 7
+"""Напишите функцию-генератор iter_high_rated(movies, min_rating=8.0),
+ которая через yield лениво отдает фильмы с рейтингом не ниже min_rating.
+Продемонстрируйте ее работу циклом for с вызовом format_report_line."""
+for high_rated_movie in iter_high_rated(movies, min_rating=8.0):
+    print(format_report_line(high_rated_movie))
+
+
+"""Напишите генераторное выражение, которое считает суммарную 
+длительность всех фильмов с рейтингом выше 7 в минутах, и 
+передайте его в sum()."""
+print(sum(movie["duration_min"] for movie in movies if movie["rating"] > 7))
+
 

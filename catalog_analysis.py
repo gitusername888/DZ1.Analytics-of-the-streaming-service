@@ -330,12 +330,13 @@ movies_9 = [
  которая через yield лениво отдает фильмы с рейтингом не ниже min_rating.
 Продемонстрируйте ее работу циклом for с вызовом format_report_line."""
 for high_rated_movie in iter_high_rated(movies, min_rating=8.0):
-    print(format_report_line(high_rated_movie))
+    print(format_report_line(high_rated_movie)) # stage 8
 
 
 """Напишите генераторное выражение, которое считает суммарную 
 длительность всех фильмов с рейтингом выше 7 в минутах, и 
 передайте его в sum()."""
-print(sum(movie["duration_min"] for movie in movies if movie["rating"] > 7))
+print(sum(movie["duration_min"] for movie 
+          in movies if movie["rating"] > 7)) #stage 8
 
 

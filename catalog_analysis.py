@@ -142,7 +142,7 @@ def format_report_line(movie:set) -> str:
     строку с описанием фильма.
     '"The Quiet Algorithm" (2024) — 9.2/10, 1ч 58м, жанры: drama, sci-fi'"""
 
-    result = f'"{movie.get("title")}" ({movie.get("year")})' 
+    result = f'"{normalize_title(movie.get("title"))}" ({movie.get("year")})' 
     result = result + f' — {movie.get("rating")}/10, '
     result = result + f'{duration_in_hours(movie.get("duration_min"))}, '
     gan = sorted(movie.get("genres"))
@@ -256,6 +256,51 @@ def iter_high_rated(movies, min_rating=8.0):
         if movie.get("rating", 0) >= min_rating:
             yield movie
 
+def build_report(movies):
+    """Напишите функцию build_report(movies), которая объединяет результаты
+    всех предыдущих этапов в единый консольный отчет: общую статистику, 
+    топ-3 фильма, количество фильмов по каждому жанру и полный список
+    уникальных жанров каталога.
+    ОТЧеТ ПО КАТАЛОГУ
+    Средний рейтинг: 7.2
+    Средний возраст фильмов: 8 лет
+
+    Топ-3 фильма:
+    "The Quiet Algorithm" (2024) — 9.2/10, 1ч 58м, жанры: drama, sci-fi
+    "Midnight In Oslo" (2020) — 8.9/10, 2ч 4м, жанры: mystery, thriller
+    "The Dune Chronicles" (2021) — 8.6/10, 2ч 35м, жанры: drama, sci-fi
+
+    Фильмов по жанрам:
+    drama — 5
+    comedy — 3
+    sci-fi — 3
+    thriller — 3
+    action — 2
+    mystery — 1
+
+    Все жанры каталога: action, comedy, drama, mystery, sci-fi, thriller 
+
+    """
+    # сортировка жанров
+    all_genres_sorted = sorted(all_genres(movies))
+    # Количество фильмов по жанрам, отсортировано по убыванию
+    genre_counts = count_by_genre(movies)
+    genre_lines = '\n'.join(
+        f'  {genre} — {count}'
+        for genre, count in sorted(genre_counts.items(), key=lambda x: -x[1])
+    )
+    #Топ-3 фильма:
+    top3 = sorted(movies, key=lambda x: x['rating'], reverse=True)[:3]
+    top3_lines = '\n'.join(f'  {format_report_line(m)}' for m in top3)
+    return (f"ОТЧеТ ПО КАТАЛОГУ\nСредний рейтинг: {average_rating(movies)}\n"
+        f"Средний возраст фильмов: "
+        f"{catalog_age_stats(movies, current_year=2026)[-1]} лет \n \n"
+        f"Топ-3 фильма: \n{top3_lines}\n"
+        f"Фильмов по жанрам:\n{genre_lines}\n"
+        f"Все жанры каталога: {', '.join(map(str,all_genres_sorted))}")
+
+
+
 
 
 movies = [
@@ -329,14 +374,15 @@ movies_9 = [
 """Напишите функцию-генератор iter_high_rated(movies, min_rating=8.0),
  которая через yield лениво отдает фильмы с рейтингом не ниже min_rating.
 Продемонстрируйте ее работу циклом for с вызовом format_report_line."""
-for high_rated_movie in iter_high_rated(movies, min_rating=8.0):
-    print(format_report_line(high_rated_movie)) # stage 8
+"""for high_rated_movie in iter_high_rated(movies, min_rating=8.0):
+    print(format_report_line(high_rated_movie)) # stage 8"""
 
 
 """Напишите генераторное выражение, которое считает суммарную 
 длительность всех фильмов с рейтингом выше 7 в минутах, и 
 передайте его в sum()."""
-print(sum(movie["duration_min"] for movie 
-          in movies if movie["rating"] > 7)) #stage 8
+"""print(sum(movie["duration_min"] for movie 
+          in movies if movie["rating"] > 7)) #stage 8"""
 
 
+print (build_report(movies))
